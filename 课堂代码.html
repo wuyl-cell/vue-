@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>课堂代码</title>
+</head>
+<body>
+<div id="practice">
+
+<!--    vue的第一个实例-->
+    <span>{{ message }}</span> <br><br><br>
+
+<!--    vue的数据类型-->
+    <!-- 字符串   -->
+    <span>字符串：{{ message }}</span> <br>
+    <!-- 数字  -->
+    <span>数字：{{ number  + 1}}</span><br>
+    <!-- 对象   -->
+    <span>对象：username={{ user.username}}   password={{ user["password"]}}</span><br>
+    <!--  数组-->
+    <span>数组：{{ arr[0] }},{{ arr[1] }},{{ arr[2] }}</span><br>
+    <!-- 数组中包含对象   -->
+    <span>
+        数组中包含对象：{{ users[0].username}},{{users[0].password}},{{users[0].age}}======
+        {{ users[1].username}},{{users[1].password}},{{users[1].age}}
+    </span><br> <br><br>
+
+<!--  插值表达式(可以是表达式、运算符、还有相关方法)      -->
+    插值表达式：{{message.toLowerCase()}}
+                {{message.toUpperCase()}}<br><br>
+
+<!--  v-text会覆盖标签中原有的数据，在网速较慢时，可以避免插值闪现的情况  -->
+    <span v-text="message">  12345 </span><br>
+    <span>12345 {{message}}</span><br><br><br>
+
+<!--  v-html  -->
+    <span v-html="tag"></span><br>
+    <span><a href="">这是a标签</a></span><br>
+    <span>{{tag}}</span> <br><br><br>
+
+<!--vue的事件绑定-->
+    <!-- 基本语法   -->
+    <span>年龄：{{age}}</span>
+    <input type="button" value="加" v-on:click="add_age">
+    <!--  事件的简化写法  -->
+    <input type="button" value="减" @click="sub_age">
+    <input type="button" value="加2" @click="add_age2">
+    <input type="button" value="减2" @click="sub_age2">
+    <!--  事件函数参数的传递  -->
+    <input type="button" value="48" @click="change_age(48)">
+    <br><br><br>
+
+<!-- v-show -->
+    <span v-show="true">测试v-show</span>
+    <hr>
+    <span v-show="false">测试</span><br>
+    <span v-show="isShow">年龄： {{age}}</span>
+    <input type="button" value="点我变化" @click="test_show"><br>
+    <span v-show="number>=18">number：{{number}}</span>
+    <input type="button" value="加" @click="add_number">
+    <input type="button" value="减" @click="sub_number">
+    <br><br><br>
+
+<!-- v-if    -->
+    <span v-if="true">v-if为true的测试</span>
+    <span v-else>v-else</span>
+    <span v-else-if>v-else-if</span>
+    <hr>
+    <span v-if="false">v-if为false的测试</span>
+    <span v-else>v-else</span>
+    <span v-else-if>v-else-if</span>
+    <br><br><br>
+
+<!--  v-bind   -->
+    <!-- v-bind的正常写法   -->
+    <input v-bind:type="type" v-bind:value="value">
+    <!--  v-bind的简化写法  -->
+    <input :type="type" :value="value"><br>
+    <input type="button" value="点我切换按钮类型" @click="change_type">
+    <br><br><br>
+
+<!--  v-for  -->
+    <!-- 遍历对象   -->
+    <span v-for="(value, key, index) in user">
+        {{index+1}}.{{key}}={{value}}****
+    </span><br>
+    <!--  遍历数组  -->
+    <span v-for="(value, index) in arr" :key="index">{{index+1}}:{{value}},</span><br>
+    <!--  遍历数组中的对象  -->
+    <span v-for="(value, index) in users" :key="index">{{value.username}},{{value.password}},{{value.age}}******</span>
+    <br><br><br>
+
+<!--  双向绑定  -->
+    <input type="text" v-model="model">
+    <br>
+    <span>{{model}}</span>
+</div>
+<script src="js/vue.min.js"></script>
+<script>
+    new Vue({
+        el: '#practice',
+        data: {
+            message: 'hello python',
+            number: 20.5,
+            user: {'username': 'wyl', 'password': 123456, 'age': 18},
+            arr: ['太原','运城','榆次'],
+            users: [{'username': 'wyl', 'password': 123456, 'age': 18},
+                {'username': 'wyl2', 'password': 123456, 'age': 20}],
+            tag: '<a href="">这是一个vue中的a标签</a>',
+            age: 18,
+            isShow: true,
+            type:'submit',
+            value:'提交',
+            model:'123'
+        },
+        methods: {
+            //事件函数的正常语法
+            add_age: function (){
+                this.age = this.age + 1;
+            },
+            sub_age: function (){
+                this.age = this.age - 1;
+            },
+            //事件函数的简化写法
+            add_age2(){
+                this.age = this.age + 2;
+            },
+            sub_age2(){
+                this.age = this.age - 2;
+            },
+            //事件函数传递参数
+            change_age(age){
+                this.age = age;
+                console.log(this.age);
+            },
+            test_show(){
+                this.isShow = !this.isShow;
+            },
+            add_number(){
+                this.number = this.number + 1;
+            },
+            sub_number(){
+                this.number = this.number - 1;
+            },
+            change_type(){
+                this.value = '重置';
+                this.type = 'reset';
+            }
+        }
+    })
+</script>
+</body>
+</html>
